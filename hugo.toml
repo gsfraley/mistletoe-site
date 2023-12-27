@@ -48,7 +48,7 @@ pub fn generate(input_config: InputConfig) -> MistHuskResult {
 }
 ```
 
-**If you take the above package and run it with:**
+**The above is a simple package written in Rust.  If you run it with:**
 
 ```sh
 mistctl generate my-namespace -p ./my-package.wasm
