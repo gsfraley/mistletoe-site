@@ -4,6 +4,11 @@ languageCode = 'en-us'
 
 theme = 'PaperMod'
 
+[[menu.main]]
+identifier = 'book'
+name = 'Book'
+url = '/book/'
+
 [params]
 disableThemeToggle = true
 defaultTheme = 'light'
