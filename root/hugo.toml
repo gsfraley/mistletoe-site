@@ -43,7 +43,7 @@ struct InputConfig {
 pub fn generate(input_config: InputConfig) -> MistHuskResult {
     let output = MistHuskOutput::new()
         .with_file("namespace.yaml".to_string(), formatdoc!{"
-            apiVersion: apps/v1
+            apiVersion: v1
             kind: Namespace
             metadata:
               name: {0}
@@ -62,7 +62,7 @@ mistctl generate my-namespace -p ./my-package.wasm
 **You get the following YAML back:**
 
 ```yaml
-apiVersion: apps/v1
+apiVersion: v1
 kind: Namespace
 metadata:
   name: my-namespace
