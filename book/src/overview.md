@@ -17,7 +17,7 @@ use mistletoe_bind::misthusk_headers;
 use serde::Deserialize;
 
 misthusk_headers! {"
-  name: example-namespace
+  name: namespace-example
   labels:
     mistletoe.dev/group: mistletoe-examples
 "}
@@ -45,7 +45,7 @@ We'll discuss and expand the above example in the [mistletoe-bind example sectio
 It takes the `name` parameter that is passed in by the engine, and creates a Namespace with that name.  Generating the YAML output of this package is done with the `mistctl generate` command:
 
 ```sh
-mistctl generate my-namespace ./example-namespace.mist
+mistctl generate my-namespace ./namespace-example.wasm
 ```
 
 That will output:
