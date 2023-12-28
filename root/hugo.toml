@@ -5,20 +5,28 @@ languageCode = 'en-us'
 theme = 'PaperMod'
 
 [[menu.main]]
+identifier = 'blog'
+name = 'Blog'
+url = '/blog/'
+weight = 10
+
+[[menu.main]]
 identifier = 'book'
 name = 'Book'
-url = '/book/'
-weight = 10
+url = 'https://mistletoe.dev/book'
+weight = 20
 
 [[menu.main]]
 identifier = 'github'
 name = 'GitHub'
 url = 'https://github.com/gsfraley/mistletoe'
-weight = 20
+weight = 30
 
 [params]
 disableThemeToggle = true
 defaultTheme = 'light'
+mainSections = []
+showtoc = true
 
 [params.label]
 text = 'Mistletoe Package Manager'
@@ -38,7 +46,7 @@ ecosystem. It's built around a runtime where the packages are **WebAssembly** mo
 
 ```rust
 misthusk_headers! {"
-  name: example-namespace
+  name: namespace-example
   labels:
     mistletoe.dev/group: mistletoe-examples
 "}
@@ -64,7 +72,7 @@ fn generate(input_config: InputConfig) -> MistHuskResult {
 **The above is a simple package written in Rust.  If you run it with:**
 
 ```sh
-mistctl generate my-namespace -p ./my-package.wasm
+mistctl generate my-namespace -p ./namespace-example.wasm
 ```
 
 **You get the following YAML back:**
@@ -82,7 +90,7 @@ YAML parser that can compile to WebAssembly.***
 # --------------
 # Roadmap
 
-**Mistletoe** is still early on in the development lifecycle.  The above example works without issue, but
+**Mistletoe** is still very early on in the development lifecycle.  The above example works without issue, but
 there are a handful of things that need to be addressed before it could reasonably be opened up for use:
 
 1. The `mistctl` utility currently only supports YAML generation -- it should be expanded to **support
@@ -97,12 +105,15 @@ multiple languages, to the nitty-gritty advanced information about the runtime f
 
 There's all that, as well as a number of less-important, but also-desired efforts worth evaluating:
 
-1. **Dependencies!**  We can get a lot more value by adding a way for packages to declare and call dependency
-packages for easier composition of systems.
-2. Since the runtime is pretty open, we could theoretically **package other package managers.**  This means we
+1. **Dependencies!**  We can get a lot more value by adding a way for packages to declare and call dependencies
+outside of whatever is compiled into the package.  This gets really useful when you consider #3 below.
+2. **Explicit support for other languages.**  While any WebAssembly-ready language will work, the project is
+written in Rust and provides Rust-first tooling.  For the next push, I'm looking to expand library support to
+TypeScript via the [QuickJS runtime](https://bellard.org/quickjs/).
+3. Since the runtime is pretty open, we could theoretically **package other package managers.**  This means we
 could provide a system to install Helm packages as if they were any other Mistletoe package.
-3. We could use some **package templates.**  The templating engine in Helm is a blessing and a curse -- it
-makes scaffolding manifests pretty straightforward, but tends to get really overcomplicated really quickly
+4. We could use some **package templates.**  The templating engine in Helm is a blessing and a curse -- it
+makes generating manifests pretty easy, but tends to get really overcomplicated really quickly
 depending on what logic is entailed in deploying the system.  **Mistletoe** addresses the curse pretty well,
-but we should provide some easy-build template packages to recreate the blessing.
+but we should provide some easy-build package templates to recreate the blessing.
 """
