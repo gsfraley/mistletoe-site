@@ -8,6 +8,13 @@ theme = 'PaperMod'
 identifier = 'book'
 name = 'Book'
 url = '/book/'
+weight = 10
+
+[[menu.main]]
+identifier = 'github'
+name = 'GitHub'
+url = 'https://github.com/gsfraley/mistletoe'
+weight = 20
 
 [params]
 disableThemeToggle = true
@@ -23,8 +30,6 @@ favicon = '/logo.png'
 
 [params.homeInfoParams]
 Content = """
-[![GitHub](https://img.shields.io/badge/GitHub-mistletoe-green)](https://github.com/gsfraley/mistletoe)
-
 # --------------
 # Overview
 

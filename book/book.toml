@@ -1,6 +1,10 @@
 [book]
+title = "The Mistletoe Book"
 authors = ["Greg Fraley"]
 language = "en"
 multilingual = false
+
 src = "src"
-title = "The Mistletoe Book"
+
+[build]
+build-dir = "../out/book"

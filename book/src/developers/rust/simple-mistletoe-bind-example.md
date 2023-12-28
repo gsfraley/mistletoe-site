@@ -147,19 +147,19 @@ Aside from the handy `formatdoc!{}` macro from the [`indoc` crate](https://crate
 type MistHuskResult = anyhow::Result<MistHuskOutput>
 ```
 
-So it's really just a wrapper around `MistHuskOutput`.  Because it leverages the [`anyhow` crate](https://crates.io/crates/anyhow), *any error type can be coerced to it.*  This means that if you added this line at the start of the function:
+So it's really just a wrapper around `MistHuskOutput`.  The error message is populated up to the user, so here is where you would put end-user input.  For a quick example, let's create an arbitrary `anyhow` error, with a failure message:
 
 ```rust
 return Err(anyhow!("dumb failure"));
 ```
 
-The package run would exit unsuccessfully, and send the error message `"dumb failure"` on up to the user.  This also works with any other error via the `?` operator:
+The package run would exit unsuccessfully, and send the error message `"dumb failure"` on up to the user.  Because it leverages the [`anyhow` crate](https://crates.io/crates/anyhow), this also works with any other error via the `?` operator:
 
 ```rust
 let parsed_yaml = serde_yaml::from_str(some_input_str)?;
 
 // Since it's `anyhow`, we can also attach arbitrary failure messages
-// to errors that we didn't make
+// to errors that we didn't make.
 let parsed_yaml = serde_yaml::from_str(some_input_str)
     .with_context(|| format!("failed to parse some inner yaml"))?;
 ```
@@ -167,6 +167,10 @@ let parsed_yaml = serde_yaml::from_str(some_input_str)
 Going over the other part of the type, we see that the actual content of it is `MistHuskOutput`, which is the object we constructed at the start of the function.
 
 *(TODO: continue this and talk about the `MistHuskOutput` object.)*
+
+## Putting it in a package
+
+*(TODO)*
 
 ## The generated code from `misthusk_headers`
 
