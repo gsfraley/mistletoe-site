@@ -11,6 +11,11 @@ Ultimately, almost all existing package management solutions run on a workflow o
 Let's take a quick look at what a package looks like and what it looks like when you go to run it.  To start, here's a very simple package written in Rust:
 
 ```rust
+use indoc::formatdoc;
+use mistletoe_api::v0_1::{MistHuskResult, MistHuskOutput};
+use mistletoe_bind::misthusk_headers;
+use serde::Deserialize;
+
 misthusk_headers! {"
   name: example-namespace
   labels:
@@ -22,7 +27,7 @@ struct InputConfig {
     name: String,
 }
 
-pub fn generate(input_config: InputConfig) -> MistHuskResult {
+fn generate(input_config: InputConfig) -> MistHuskResult {
     let output = MistHuskOutput::new()
         .with_file("namespace.yaml".to_string(), formatdoc!{"
             apiVersion: v1
