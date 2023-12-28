@@ -18,6 +18,9 @@ text = 'Mistletoe Package Manager'
 icon = '/logo.png'
 iconHeight = 80
 
+[params.assets]
+favicon = '/logo.png'
+
 [params.homeInfoParams]
 Content = """
 [![GitHub](https://img.shields.io/badge/GitHub-mistletoe-green)](https://github.com/gsfraley/mistletoe)
