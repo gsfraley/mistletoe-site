@@ -86,7 +86,7 @@ impl Into<BInputs> for &MyMicroserviceInputs { /* ...just the mic-b inputs... */
 impl Into<CInputs> for &MyMicroserviceInputs { /* ...just the mic-c inputs... */ }
 
 pub fn generate(inputs: MyPlatformInputs) -> MistHuskResult {
-    // 1. Create some users
+    // 1. Create some user definitions
     let mariadb_user_a = MariaDbUser::create_secure("mic_a");
     let mariadb_user_b = MariaDbUser::create_secure("mic_b");
     let redis_user_b = RedisUser::create_secure("mic_b");
