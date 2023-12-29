@@ -6,7 +6,7 @@ On the [Overview](../../overview.html) page we saw a quick Rust example:
 
 ```rust
 use indoc::formatdoc;
-use mistletoe_api::v0_1::{MistResult, MistOutput};
+use mistletoe_api::v1alpha1::{MistResult, MistOutput};
 use mistletoe_bind::mistletoe_headers;
 use serde::Deserialize;
 

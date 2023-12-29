@@ -12,7 +12,7 @@ Let's take a quick look at what a package looks like and what it looks like when
 
 ```rust
 use indoc::formatdoc;
-use mistletoe_api::v0_1::{MistResult, MistOutput};
+use mistletoe_api::v1alpha1::{MistResult, MistOutput};
 use mistletoe_bind::mistletoe_headers;
 use serde::Deserialize;
 
