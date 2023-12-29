@@ -12,11 +12,11 @@ Let's take a quick look at what a package looks like and what it looks like when
 
 ```rust
 use indoc::formatdoc;
-use mistletoe_api::v0_1::{MistHuskResult, MistHuskOutput};
-use mistletoe_bind::misthusk_headers;
+use mistletoe_api::v0_1::{MistResult, MistOutput};
+use mistletoe_bind::mistletoe_headers;
 use serde::Deserialize;
 
-misthusk_headers! {"
+mistletoe_headers! {"
   name: namespace-example
   labels:
     mistletoe.dev/group: mistletoe-examples
@@ -27,8 +27,8 @@ struct InputConfig {
     name: String,
 }
 
-fn generate(input_config: InputConfig) -> MistHuskResult {
-    let output = MistHuskOutput::new()
+fn generate(input_config: InputConfig) -> MistResult {
+    let output = MistOutput::new()
         .with_file("namespace.yaml".to_string(), formatdoc!{"
             apiVersion: v1
             kind: Namespace

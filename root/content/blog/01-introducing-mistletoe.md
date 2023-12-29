@@ -64,7 +64,7 @@ impl MariaDbUser {
 /// This is the function that every Mistletoe package provides, and is both
 /// an entrypoint for direct execution via `mistctl`, as well as for other
 /// packages to call.
-pub fn generate(inputs: MariaDbInputs) -> MistHuskResult {
+pub fn generate(inputs: MariaDbInputs) -> MistResult {
     /* ...return the YAML for a MariaDB Deployment... */
 }
 ```
@@ -85,7 +85,7 @@ impl Into<AInputs> for &MyMicroserviceInputs { /* ...just the mic-a inputs... */
 impl Into<BInputs> for &MyMicroserviceInputs { /* ...just the mic-b inputs... */ }
 impl Into<CInputs> for &MyMicroserviceInputs { /* ...just the mic-c inputs... */ }
 
-pub fn generate(inputs: MyPlatformInputs) -> MistHuskResult {
+pub fn generate(inputs: MyPlatformInputs) -> MistResult {
     // 1. Create some user definitions
     let mariadb_user_a = MariaDbUser::create_secure("mic_a");
     let mariadb_user_b = MariaDbUser::create_secure("mic_b");
@@ -118,7 +118,7 @@ pub fn generate(inputs: MyPlatformInputs) -> MistHuskResult {
     }
 
     // 4. Generate and attach all the YAML to our package's output
-    let output = MistHuskOutput::new()
+    let output = MistOutput::new()
         .with_files_from(&mariadb_instance)
         .with_files_from(&redis_instance)
         .with_files_from(&mic_a_mist::generate(&child_inputs.into())?)

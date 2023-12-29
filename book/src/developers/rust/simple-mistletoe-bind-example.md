@@ -6,11 +6,11 @@ On the [Overview](../../overview.html) page we saw a quick Rust example:
 
 ```rust
 use indoc::formatdoc;
-use mistletoe_api::v0_1::{MistHuskResult, MistHuskOutput};
-use mistletoe_bind::misthusk_headers;
+use mistletoe_api::v0_1::{MistResult, MistOutput};
+use mistletoe_bind::mistletoe_headers;
 use serde::Deserialize;
 
-misthusk_headers! {"
+mistletoe_headers! {"
   name: example-namespace
   labels:
     mistletoe.dev/group: mistletoe-examples
@@ -21,8 +21,8 @@ struct InputConfig {
     name: String,
 }
 
-fn generate(input_config: InputConfig) -> MistHuskResult {
-    let output = MistHuskOutput::new()
+fn generate(input_config: InputConfig) -> MistResult {
+    let output = MistOutput::new()
         .with_file("namespace.yaml".to_string(), formatdoc!{"
             apiVersion: v1
             kind: Namespace
@@ -66,7 +66,7 @@ For a base package, everything here is required aside from `indoc`, which we add
 Let's go top-to-bottom on the Rust source code and cover what each portion does.  To start, there's a macro that generates headers for our package:
 
 ```rust
-misthusk_headers! {"
+mistletoe_headers! {"
   name: example-namespace
   labels:
     mistletoe.dev/group: mistletoe-examples
@@ -75,7 +75,7 @@ misthusk_headers! {"
 
 The input of this macro is a YAML string eerily reminiscent of the "metadata" section of Kubernetes resources.  The only required field here is the `name` of the package.  You can also add labels containing additional information about the package.  For now, you may want to add a `mistletoe.dev/group` label with the name of your project or organization.
 
-This generates some binding functions that we'll cover [later in the section](./simple-mistletoe-bind-example.html#the-generated-code-from-misthusk_headers), but for now the only thing we need to worry about is that it will look for a `generate` function defined by you.
+This generates some binding functions that we'll cover [later in the section](./simple-mistletoe-bind-example.html#the-generated-code-from-mistletoe_headers), but for now the only thing we need to worry about is that it will look for a `generate` function defined by you.
 
 Let's look at ours, as well as the input object we defined for it:
 
@@ -85,8 +85,8 @@ struct InputConfig {
     name: String,
 }
 
-fn generate(input_config: InputConfig) -> MistHuskResult {
-    let output = MistHuskOutput::new()
+fn generate(input_config: InputConfig) -> MistResult {
+    let output = MistOutput::new()
         .with_file("namespace.yaml".to_string(), formatdoc!{"
             apiVersion: v1
             kind: Namespace
@@ -98,9 +98,9 @@ fn generate(input_config: InputConfig) -> MistHuskResult {
 }
 ```
 
-The important part here is the signature: `(input_config: InputConfig) -> MistHuskResult`
+The important part here is the signature: `(input_config: InputConfig) -> MistResult`
 
-Essentially, you can specify a function that takes any parameter that implements `Deserialize` (and that includes `String`), and outputs our `MistHuskResult` object.
+Essentially, you can specify a function that takes any parameter that implements `Deserialize` (and that includes `String`), and outputs our `MistResult` object.
 
 The input we'll be receiving is an arbitrary YAML document, with at least `name` specified in it (and potentially more fields in the future).  For example, maybe the user will pass you these values:
 
@@ -125,13 +125,13 @@ struct InputConfig {
 
 And it would just work as you'd expect!
 
-### MistHuskResult
+### MistResult
 
 Before we get sidetracked, let's look at the contents of that function from before:
 
 ```rust
-fn generate(input_config: InputConfig) -> MistHuskResult {
-    let output = MistHuskOutput::new()
+fn generate(input_config: InputConfig) -> MistResult {
+    let output = MistOutput::new()
         .with_file("namespace.yaml".to_string(), formatdoc!{"
             apiVersion: v1
             kind: Namespace
@@ -143,13 +143,13 @@ fn generate(input_config: InputConfig) -> MistHuskResult {
 }
 ```
 
-Aside from the handy `formatdoc!{}` macro from the [`indoc` crate](https://crates.io/crates/indoc), the only unexplained types here are `MistHuskResult` and `MistHuskOutput`.  To start, let's look at the definition of `MistHuskResult`:
+Aside from the handy `formatdoc!{}` macro from the [`indoc` crate](https://crates.io/crates/indoc), the only unexplained types here are `MistResult` and `MistOutput`.  To start, let's look at the definition of `MistResult`:
 
 ```rust
-type MistHuskResult = anyhow::Result<MistHuskOutput>
+type MistResult = anyhow::Result<MistOutput>
 ```
 
-So it's really just a wrapper around `MistHuskOutput`.  The error message is populated up to the user, so here is where you would put end-user input.  For a quick example, let's create an arbitrary `anyhow` error, with a failure message:
+So it's really just a wrapper around `MistOutput`.  The error message is populated up to the user, so here is where you would put end-user input.  For a quick example, let's create an arbitrary `anyhow` error, with a failure message:
 
 ```rust
 return Err(anyhow!("dumb failure"));
@@ -166,16 +166,16 @@ let parsed_yaml = serde_yaml::from_str(some_input_str)
     .with_context(|| format!("failed to parse some inner yaml"))?;
 ```
 
-Going over the other part of the type, we see that the actual content of it is `MistHuskOutput`, which is the object we constructed at the start of the function.
+Going over the other part of the type, we see that the actual content of it is `MistOutput`, which is the object we constructed at the start of the function.
 
-### MistHuskOutput
+### MistOutput
 
-*(TODO: continue this and talk about the `MistHuskOutput` object.)*
+*(TODO: continue this and talk about the `MistOutput` object.)*
 
 ## Putting it in a package
 
 *(TODO)*
 
-## The generated code from `misthusk_headers`
+## The generated code from `mistletoe_headers`
 
 *(TODO)*
