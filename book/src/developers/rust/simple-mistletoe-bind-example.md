@@ -11,24 +11,26 @@ use mistletoe_bind::mistletoe_headers;
 use serde::Deserialize;
 
 mistletoe_headers! {"
-  name: example-namespace
+  name: namespace-example
   labels:
     mistletoe.dev/group: mistletoe-examples
 "}
 
 #[derive(Deserialize)]
-struct InputConfig {
+struct NamespaceExampleInputs {
     name: String,
 }
 
-fn generate(input_config: InputConfig) -> MistResult {
+fn generate(inputs: NamespaceExampleInputs) -> MistResult {
+    let name = inputs.name;
+
     let output = MistOutput::new()
         .with_file("namespace.yaml".to_string(), formatdoc!{"
             apiVersion: v1
             kind: Namespace
             metadata:
-              name: {0}
-        ", input_config.name});
+              name: {name}
+        "});
 
     Ok(output)
 }
@@ -44,7 +46,7 @@ The contents of `Cargo.toml` is:
 
 ```toml
 [package]
-name = "mistletoe-example-basic-namespace"
+name = "mistletoe-namespace-example"
 version = "0.1.0"
 edition = "2021"
 
@@ -67,7 +69,7 @@ Let's go top-to-bottom on the Rust source code and cover what each portion does.
 
 ```rust
 mistletoe_headers! {"
-  name: example-namespace
+  name: namespace-example
   labels:
     mistletoe.dev/group: mistletoe-examples
 "}
@@ -81,24 +83,26 @@ Let's look at ours, as well as the input object we defined for it:
 
 ```rust
 #[derive(Deserialize)]
-struct InputConfig {
+struct NamespaceExampleInputs {
     name: String,
 }
 
-fn generate(input_config: InputConfig) -> MistResult {
+fn generate(inputs: NamespaceExampleInputs) -> MistResult {
+    let name = inputs.name;
+
     let output = MistOutput::new()
         .with_file("namespace.yaml".to_string(), formatdoc!{"
             apiVersion: v1
             kind: Namespace
             metadata:
-              name: {0}
-        ", input_config.name});
+              name: {name}
+        "});
 
     Ok(output)
 }
 ```
 
-The important part here is the signature: `(input_config: InputConfig) -> MistResult`
+The important part here is the signature: `(inputs: NamespaceExampleInputs) -> MistResult`
 
 Essentially, you can specify a function that takes any parameter that implements `Deserialize` (and that includes `String`), and outputs our `MistResult` object.
 
@@ -116,7 +120,7 @@ To accommodate, you might expand your struct definition to:
 
 ```rust
 #[derive(Deserialize)]
-struct InputConfig {
+struct NamespaceExampleInputs {
     name: String,
     #[serde(default)] // If we don't receive it, just represent it here as `None`
     labels: Option<BTreeMap<String, String>>,
@@ -130,14 +134,16 @@ And it would just work as you'd expect!
 Before we get sidetracked, let's look at the contents of that function from before:
 
 ```rust
-fn generate(input_config: InputConfig) -> MistResult {
+fn generate(inputs: NamespaceExampleInputs) -> MistResult {
+    let name = inputs.name;
+
     let output = MistOutput::new()
         .with_file("namespace.yaml".to_string(), formatdoc!{"
             apiVersion: v1
             kind: Namespace
             metadata:
-              name: {0}
-        ", input_config.name});
+              name: {name}
+        "});
 
     Ok(output)
 }

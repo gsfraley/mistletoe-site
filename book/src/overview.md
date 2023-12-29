@@ -23,18 +23,20 @@ mistletoe_headers! {"
 "}
 
 #[derive(Deserialize)]
-struct InputConfig {
+struct NamespaceExampleInputs {
     name: String,
 }
 
-fn generate(input_config: InputConfig) -> MistResult {
+fn generate(inputs: NamespaceExampleInputs) -> MistResult {
+    let name = inputs.name;
+
     let output = MistOutput::new()
         .with_file("namespace.yaml".to_string(), formatdoc!{"
             apiVersion: v1
             kind: Namespace
             metadata:
-              name: {0}
-        ", input_config.name});
+              name: {name}
+        "});
 
     Ok(output)
 }
@@ -45,7 +47,7 @@ We'll discuss and expand the above example in the [mistletoe-bind example sectio
 It takes the `name` parameter that is passed in by the engine, and creates a Namespace with that name.  Generating the YAML output of this package is done with the `mistctl generate` command:
 
 ```sh
-mistctl generate my-namespace ./namespace-example.wasm
+mistctl generate my-namespace -p ./namespace-example.mist-pack.wasm
 ```
 
 That will output:
