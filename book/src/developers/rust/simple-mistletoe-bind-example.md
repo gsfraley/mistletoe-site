@@ -1,6 +1,6 @@
 # Simple `mistletoe-bind` example
 
-To make creating packages in Rust a little easier, we provide a `mistletoe-bind` crate that contains macros and libraries to hide away
+To make creating packages in Rust a little easier, we provide a `mistletoe-bind` crate that contains macros and libraries to provide higher-level abstractions of the underlying WebAssembly bindings.
 
 On the [Overview](../../overview.html) page we saw a quick Rust example:
 
@@ -125,6 +125,8 @@ struct InputConfig {
 
 And it would just work as you'd expect!
 
+### MistHuskResult
+
 Before we get sidetracked, let's look at the contents of that function from before:
 
 ```rust
@@ -165,6 +167,8 @@ let parsed_yaml = serde_yaml::from_str(some_input_str)
 ```
 
 Going over the other part of the type, we see that the actual content of it is `MistHuskOutput`, which is the object we constructed at the start of the function.
+
+### MistHuskOutput
 
 *(TODO: continue this and talk about the `MistHuskOutput` object.)*
 
