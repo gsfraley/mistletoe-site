@@ -35,8 +35,7 @@ fn generate(inputs: NamespaceExampleInputs) -> MistResult {
             apiVersion: v1
             kind: Namespace
             metadata:
-              name: {name}
-        "});
+              name: {name}"});
 
     Ok(output)
 }
