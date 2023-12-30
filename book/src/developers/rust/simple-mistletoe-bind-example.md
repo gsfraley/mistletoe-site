@@ -5,9 +5,10 @@ To make creating packages in Rust a little easier, we provide a `mistletoe-bind`
 On the [Overview](../../overview.html) page we saw a quick Rust example:
 
 ```rust
-use indoc::formatdoc;
 use mistletoe_api::v1alpha1::{MistResult, MistOutput};
 use mistletoe_bind::mistletoe_headers;
+
+use indoc::formatdoc;
 use serde::Deserialize;
 
 mistletoe_headers! {"
@@ -17,19 +18,20 @@ mistletoe_headers! {"
 "}
 
 #[derive(Deserialize)]
-struct NamespaceExampleInputs {
+pub struct Inputs {
     name: String,
 }
 
-fn generate(inputs: NamespaceExampleInputs) -> MistResult {
+pub fn generate(inputs: Inputs) -> MistResult {
     let name = inputs.name;
 
     let output = MistOutput::new()
-        .with_file("namespace.yaml".to_string(), formatdoc!{"
+        .with_file("namespace.yaml".to_string(), formatdoc!("
             apiVersion: v1
             kind: Namespace
             metadata:
-              name: {name}"});
+              name: {name}
+        "));
 
     Ok(output)
 }
@@ -46,7 +48,7 @@ The contents of `Cargo.toml` is:
 ```toml
 [package]
 name = "mistletoe-namespace-example"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 
 [lib]
@@ -60,7 +62,7 @@ serde = { version = "1.0", features = ["derive"] }
 wasm-bindgen = "0.2"
 ```
 
-For a base package, everything here is required aside from `indoc`, which we added to leverage the `formatdoc!{}` macro in the above.
+For a base package, everything here is required aside from `indoc`, which we added to leverage the `formatdoc!()` macro in the above.
 
 ## Breaking it down
 
@@ -82,26 +84,26 @@ Let's look at ours, as well as the input object we defined for it:
 
 ```rust
 #[derive(Deserialize)]
-struct NamespaceExampleInputs {
+pub struct Inputs {
     name: String,
 }
 
-fn generate(inputs: NamespaceExampleInputs) -> MistResult {
+pub fn generate(inputs: Inputs) -> MistResult {
     let name = inputs.name;
 
     let output = MistOutput::new()
-        .with_file("namespace.yaml".to_string(), formatdoc!{"
+        .with_file("namespace.yaml".to_string(), formatdoc!("
             apiVersion: v1
             kind: Namespace
             metadata:
               name: {name}
-        "});
+        "));
 
     Ok(output)
 }
 ```
 
-The important part here is the signature: `(inputs: NamespaceExampleInputs) -> MistResult`
+The important part here is the signature: `(inputs: Inputs) -> MistResult`
 
 Essentially, you can specify a function that takes any parameter that implements `Deserialize` (and that includes `String`), and outputs our `MistResult` object.
 
@@ -119,7 +121,7 @@ To accommodate, you might expand your struct definition to:
 
 ```rust
 #[derive(Deserialize)]
-struct NamespaceExampleInputs {
+pub struct Inputs {
     name: String,
     #[serde(default)] // If we don't receive it, just represent it here as `None`
     labels: Option<BTreeMap<String, String>>,
@@ -133,22 +135,22 @@ And it would just work as you'd expect!
 Before we get sidetracked, let's look at the contents of that function from before:
 
 ```rust
-fn generate(inputs: NamespaceExampleInputs) -> MistResult {
+pub fn generate(inputs: Inputs) -> MistResult {
     let name = inputs.name;
 
     let output = MistOutput::new()
-        .with_file("namespace.yaml".to_string(), formatdoc!{"
+        .with_file("namespace.yaml".to_string(), formatdoc!("
             apiVersion: v1
             kind: Namespace
             metadata:
               name: {name}
-        "});
+        "));
 
     Ok(output)
 }
 ```
 
-Aside from the handy `formatdoc!{}` macro from the [`indoc` crate](https://crates.io/crates/indoc), the only unexplained types here are `MistResult` and `MistOutput`.  To start, let's look at the definition of `MistResult`:
+Aside from the handy `formatdoc!()` macro from the [`indoc` crate](https://crates.io/crates/indoc), the only unexplained types here are `MistResult` and `MistOutput`.  To start, let's look at the definition of `MistResult`:
 
 ```rust
 type MistResult = anyhow::Result<MistOutput>

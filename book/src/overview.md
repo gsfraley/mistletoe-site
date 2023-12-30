@@ -11,9 +11,10 @@ Ultimately, almost all existing package management solutions run on a workflow o
 Let's take a quick look at what a package looks like and what it looks like when you go to run it.  To start, here's a very simple package written in Rust:
 
 ```rust
-use indoc::formatdoc;
 use mistletoe_api::v1alpha1::{MistResult, MistOutput};
 use mistletoe_bind::mistletoe_headers;
+
+use indoc::formatdoc;
 use serde::Deserialize;
 
 mistletoe_headers! {"
@@ -23,19 +24,20 @@ mistletoe_headers! {"
 "}
 
 #[derive(Deserialize)]
-struct NamespaceExampleInputs {
+pub struct Inputs {
     name: String,
 }
 
-fn generate(inputs: NamespaceExampleInputs) -> MistResult {
+pub fn generate(inputs: Inputs) -> MistResult {
     let name = inputs.name;
 
     let output = MistOutput::new()
-        .with_file("namespace.yaml".to_string(), formatdoc!{"
+        .with_file("namespace.yaml".to_string(), formatdoc!("
             apiVersion: v1
             kind: Namespace
             metadata:
-              name: {name}"});
+              name: {name}
+        "));
 
     Ok(output)
 }
@@ -46,7 +48,7 @@ We'll discuss and expand the above example in the [mistletoe-bind example sectio
 It takes the `name` parameter that is passed in by the engine, and creates a Namespace with that name.  Generating the YAML output of this package is done with the `mistctl generate` command:
 
 ```sh
-mistctl generate my-namespace -p ./namespace-example.mist-pack.wasm
+mistctl generate my-namespace -p mistletoe/examples/namespace-example:0.1.1
 ```
 
 That will output:
