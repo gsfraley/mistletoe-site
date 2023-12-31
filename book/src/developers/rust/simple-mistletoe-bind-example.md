@@ -6,12 +6,12 @@ On the [Overview](../../overview.html) page we saw a quick Rust example:
 
 ```rust
 use mistletoe_api::v1alpha1::{MistResult, MistOutput};
-use mistletoe_bind::mistletoe_headers;
+use mistletoe_bind::mistletoe_package;
 
 use indoc::formatdoc;
 use serde::Deserialize;
 
-mistletoe_headers! {"
+mistletoe_package! {"
   name: namespace-example
   labels:
     mistletoe.dev/group: mistletoe-examples
@@ -69,7 +69,7 @@ For a base package, everything here is required aside from `indoc`, which we add
 Let's go top-to-bottom on the Rust source code and cover what each portion does.  To start, there's a macro that generates headers for our package:
 
 ```rust
-mistletoe_headers! {"
+mistletoe_package! {"
   name: namespace-example
   labels:
     mistletoe.dev/group: mistletoe-examples
@@ -78,7 +78,7 @@ mistletoe_headers! {"
 
 The input of this macro is a YAML string eerily reminiscent of the "metadata" section of Kubernetes resources.  The only required field here is the `name` of the package.  You can also add labels containing additional information about the package.  For now, you may want to add a `mistletoe.dev/group` label with the name of your project or organization.
 
-This generates some binding functions that we'll cover [later in the section](./simple-mistletoe-bind-example.html#the-generated-code-from-mistletoe_headers), but for now the only thing we need to worry about is that it will look for a `generate` function defined by you.
+This generates some binding functions that we'll cover [later in the section](./simple-mistletoe-bind-example.html#the-generated-code-from-mistletoe_package), but for now the only thing we need to worry about is that it will look for a `generate` function defined by you.
 
 Let's look at ours, as well as the input object we defined for it:
 
@@ -183,6 +183,6 @@ Going over the other part of the type, we see that the actual content of it is `
 
 *(TODO)*
 
-## The generated code from `mistletoe_headers`
+## The generated code from `mistletoe_package`
 
 *(TODO)*

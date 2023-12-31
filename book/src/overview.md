@@ -12,12 +12,12 @@ Let's take a quick look at what a package looks like and what it looks like when
 
 ```rust
 use mistletoe_api::v1alpha1::{MistResult, MistOutput};
-use mistletoe_bind::mistletoe_headers;
+use mistletoe_bind::mistletoe_package;
 
 use indoc::formatdoc;
 use serde::Deserialize;
 
-mistletoe_headers! {"
+mistletoe_package! {"
   name: namespace-example
   labels:
     mistletoe.dev/group: mistletoe-examples
