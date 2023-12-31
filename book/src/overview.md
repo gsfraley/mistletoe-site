@@ -43,7 +43,7 @@ pub fn generate(inputs: Inputs) -> MistResult {
 }
 ```
 
-We'll discuss and expand the above example in the [mistletoe-bind example section](./developers/rust/simple-mistletoe-bind-example.html), but for now we'll just talk about what it does.
+We'll discuss and expand the above example in the [Rust section](./developers/for-rust-developers.md), but for now we'll just talk about what it does.
 
 It takes the `name` parameter that is passed in by the engine, and creates a Namespace with that name.  Generating the YAML output of this package is done with the `mistctl generate` command:
 
