@@ -39,7 +39,7 @@ Options:
 For now, it currently surfaces the raw YAML MistPackage value:
 
 ```txt
-> mistctl inspect mistletoe/examples/namespace-example:0.1.1
+> mistctl inspect mistletoe/examples/namespace-example:0.1.2
 apiVersion: mistletoe.dev/v1alpha1
 kind: MistPackage
 metadata:
@@ -72,7 +72,7 @@ Options:
 The only required parameters are the `name` and `--package`.  For instance, this is all our "namespace-example" package needs:
 
 ```txt
-> mistctl generate my-namespace -p mistletoe/examples/namespace-example:0.1.1
+> mistctl generate my-namespace -p mistletoe/examples/namespace-example:0.1.2
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -100,7 +100,7 @@ You can also control the output format with `--output`.  This can be either `raw
 `raw` outputs the raw response from the package:
 
 ```txt
-> mistctl generate my-namespace -p mistletoe/examples/namespace-example:0.1.1 --output raw
+> mistctl generate my-namespace -p mistletoe/examples/namespace-example:0.1.2 --output raw
 apiVersion: mistletoe.dev/v1alpha1
 kind: MistResult
 data:
@@ -116,7 +116,7 @@ data:
 `yaml` outputs the processed contents of the files:
 
 ```txt
-> mistctl generate my-namespace -p mistletoe/examples/namespace-example:0.1.1 --output yaml
+> mistctl generate my-namespace -p mistletoe/examples/namespace-example:0.1.2 --output yaml
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -126,7 +126,7 @@ metadata:
 And `dir` outputs the contents of the file into the filetree as specified by the package:
 
 ```txt
-> mistctl generate my-namespace -p mistletoe/examples/namespace-example:0.1.1 --output dir=out
+> mistctl generate my-namespace -p mistletoe/examples/namespace-example:0.1.2 --output dir=out
 > find ./out
 ./namespace.yaml 
 ```

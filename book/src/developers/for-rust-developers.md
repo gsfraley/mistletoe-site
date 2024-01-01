@@ -48,7 +48,7 @@ The contents of `Cargo.toml` is:
 ```toml
 [package]
 name = "mistletoe-namespace-example"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 
 [lib]

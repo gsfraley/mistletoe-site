@@ -48,7 +48,7 @@ We'll discuss and expand the above example in the [Rust section](./developers/fo
 It takes the `name` parameter that is passed in by the engine, and creates a Namespace with that name.  Generating the YAML output of this package is done with the `mistctl generate` command:
 
 ```sh
-mistctl generate my-namespace -p mistletoe/examples/namespace-example:0.1.1
+mistctl generate my-namespace -p mistletoe/examples/namespace-example:0.1.2
 ```
 
 That will output:
