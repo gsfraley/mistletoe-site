@@ -1,7 +1,7 @@
 +++
-title = 'Introducing Mistletoe (WIP)'
-description = 'the Polyglot Package Manager for Kubernetes'
-data = '2023-12-28T18:21:00-05:00'
+title = "Introducing Mistletoe (WIP)"
+description = "the Polyglot Package Manager for Kubernetes"
+date = "2023-12-28T18:21:00-05:00"
 +++
 
 **Hello world!**  There's a [quick summary and roadmap](/) on the main page of the site, but I want to get into the nitty-gritty of **why**, **how**, and **when** the project is landing.  Things are moving *very* fast, and the project has gone from nothing to one-quarter-of-a-package-manager in under a week.
